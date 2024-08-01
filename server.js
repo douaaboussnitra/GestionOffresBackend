@@ -9,9 +9,6 @@ var corsOption = {
 app.use(cors(corsOption)) ;
 app.use(express.json()) ;
 app.use(express.urlencoded({ extended: true })) ;
-app.get("/",(req,res)=>  {
- res.json({ message: "Welcome to bezkoder application." });
-})
 require('./app/routes/auth.js')(app);
 app.listen( port,() => console.log("Server is running on port ${PORT}."))
 
