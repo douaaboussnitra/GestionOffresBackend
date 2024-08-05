@@ -10,14 +10,17 @@
   "author": "douaa",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.17.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
-    "mysql": "^2.18.1",
-    "mysql2": "^3.11.0",
-    "nodemon": "^3.1.4"
+    "mysql2": "^3.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "prisma": "^5.17.0"
   }
 }

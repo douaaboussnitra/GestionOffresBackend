@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql" 
+  url      = env("DATABASE_URL")
+}
+
+model Validation {
+  id            Int      @id @default(autoincrement())
+  candidate_id  Int
+  validated_by  Int
+  result        String
+  candidate     Candidates @relation(fields: [candidate_id], references: [id])
+}
+
+model Notifications {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  message    String
+  read       Boolean
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id])
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  user_name   String
+  password    String
+  email       String
+  id_role     Int
+  role        Role          @relation(fields: [id_role], references: [id])
+  candidates  Candidates?
+  notifications Notifications[]
+  job_offers   JobOffers[]
+}
+
+model Role {
+  id    Int    @id @default(autoincrement())
+  name       String
+  description String
+  users      User[]
+}
+
+model Candidates {
+  id         Int       @id @default(autoincrement())
+  user_id    Int       @unique
+  cv         String
+  prenom         String
+  nom         String
+  email         String
+  telephone         Int
+  experince  String
+  user       User      @relation(fields: [user_id], references: [id])
+  applications Application[]
+  skills      Skills[]
+  validations Validation[]
+}
+
+model JobOffers {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  requirement String
+  location    String
+  salary      Float
+  posted_by   Int
+  user        User      @relation(fields: [posted_by], references: [id])
+  category_id Int
+  category    Category  @relation(fields: [category_id], references: [id])
+  applications Application[]
+}
+
+model Category {
+  id          Int        @id @default(autoincrement())
+  name        String
+  job_offers  JobOffers[]
+  skills      Skills[]
+}
+
+model Application {
+  id            Int      @id @default(autoincrement())
+  candidate_id  Int
+  job_offer_id  Int
+  candidate     Candidates @relation(fields: [candidate_id], references: [id])
+  job_offer     JobOffers  @relation(fields: [job_offer_id], references: [id])
+  interview     Interview?
+}
+
+model Interview {
+  id            Int      @id @default(autoincrement())
+  application_id Int     @unique
+  location      String
+  meeting_link  String
+  application   Application @relation(fields: [application_id], references: [id])
+}
+
+model Skills {
+  id         Int      @id @default(autoincrement())
+  name       String
+  description String
+  category_id Int
+  category   Category @relation(fields: [category_id], references: [id])
+  candidates Candidates[]
+}
