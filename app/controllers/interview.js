@@ -1,4 +1,4 @@
-const { pool, prisma } = require('../config/db');
+const { prisma } = require('../config/prismaClient');
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
 module.exports = {
@@ -60,7 +60,7 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   },
-  deleteIinterview: async (req, res) => {
+  deleteInterview: async (req, res) => {
     try {
       const { id } = req.params;
       await prisma.interview.delete({

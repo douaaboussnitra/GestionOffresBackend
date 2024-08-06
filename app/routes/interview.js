@@ -1,9 +1,17 @@
-import { getAllInterview, getInterviewById, createInterview, updateInterview, deleteInterview } from '../controllers/Interview_controller';
-import { Router } from 'express';
-const router = Router();
-router.get('/', getAllInterview);
-router.get('/:id', getInterviewById);
-router.post('/', createInterview);
-router.put('/:id', updateInterview);
-router.delete('/:id', deleteInterview);
-export default router;
+const {
+  getAllInterview,
+  getInterviewById,
+  createInterview,
+  updateInterview,
+  deleteInterview,
+} = require("../controllers/interview");
+const { Router } = require("express");
+
+const interviewRouter = Router();
+interviewRouter.get("/", getAllInterview);
+interviewRouter.get("/:id", getInterviewById);
+interviewRouter.post("/", createInterview);
+interviewRouter.put("/:id", updateInterview);
+interviewRouter.delete("/:id", deleteInterview);
+
+module.exports = { interviewRouter };

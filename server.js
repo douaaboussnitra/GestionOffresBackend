@@ -1,60 +1,56 @@
+const express = require("express");
 
-const express = require("express") ;
+const { applicationRouter } = require("./app/routes/application.js");
 
-const applicationRoute = require('./app/routes/application.js');
+// const authRoutes =require('./app/routes/auth.js');
 
-const authRoutes =require('./app/routes/auth.js');
+const { condidateRouter } = require("./app/routes/candidates.js");
 
-const candidatesRoutes =require('./app/routes/candidates.js');
+const { categoryRouter } = require("./app/routes/category.js");
 
-const categoryRoutes = require('./app/routes/category.js');
+const { interviewRouter } = require("./app/routes/interview.js");
 
-const interviewRoutes =require('./app/routes/interview.js');
+const { jobOfferRouter } = require("./app/routes/job-offers.js");
 
-const joboffersRoutes =require('./app/routes/job-offers.js');
+const { notificationRouter } = require("./app/routes/notifications.js");
 
-const notificationsRoutes =require('./app/routes/notifications.js');
+const { roleRouter } = require("./app/routes/role.js");
 
-const roleRoutes =require('./app/routes/role.js');
+const { skillRouter } = require("./app/routes/skills.js");
 
-const skillsRoutes =require('./app/routes/skills.js');
+const { userRouter } = require("./app/routes/user.js");
 
-const userRoutes =require('./app/routes/user.js');
-
-const cors = require("cors")  ;
-const app = express() ;
+const cors = require("cors");
+const app = express();
 
 var corsOption = {
-    origin: "http://localhost:4200"
+  origin: "http://localhost:4200",
 };
-app.use(cors(corsOption)) ;
-app.use(express.json()) ;
-app.use(express.urlencoded({ extended: true })) ;
-
-const { testDbConnection } = require('./config/db');
-app.use(cors());
+app.use(cors(corsOption));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-testDbConnection();
 
-app.use('/api/category', applicationRoute );
-app.use('/api/poste', authRoutes);
-app.use('/api/organisation', candidatesRoutes);
-app.use('/api/category', categoryRoutes);
-app.use('/api/candidat', interviewRoutes);
-app.use('/api/recruteur', joboffersRoutes);
-app.use('/api/offreemploi', notificationsRoutes);
-app.use('/api/category', roleRoutes);
-app.use('/api/category', skillsRoutes);
-app.use('/api/category', userRoutes);
+// const { testDbConnection } = require('./config/db');
+// app.use(cors());
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// testDbConnection();
 
+app.use("/api/application", applicationRouter);
+// app.use('/api/poste', authRoutes);
+app.use("/api/candidates", condidateRouter);
+app.use("/api/category", categoryRouter);
+app.use("/api/interview", interviewRouter);
+app.use("/api/joboffer", jobOfferRouter);
+app.use("/api/notification", notificationRouter);
+app.use("/api/role", roleRouter);
+app.use("/api/skill", skillRouter);
+app.use("/api/user", userRouter);
 
 const port = 3000;
 app.listen(port, () => {
-    console.log('server up on port 3000')
-})
-
-
+  console.log("server up on port 3000");
+});
 
 /*
 const express = require('express')
