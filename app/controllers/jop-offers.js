@@ -1,8 +1,8 @@
 import { prisma } from '../config/prismaClient';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
-module.exports = {
-  getAllJob_offers : async (req, res) => {
+
+export const getAllJob_offers = async (req, res) => {
     try {
       const job_offers = await prisma.job_offers .findMany();
       //const result = await pool.query('SELECT * FROM candidat');
@@ -10,8 +10,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  getJob_offersById: async (req, res) => {
+  }
+  export const getJob_offersById= async (req, res) => {
     try {
       const { id } = req.params;
       const job_offers  = await prisma.job_offers.findUnique({
@@ -24,8 +24,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  createJob_offersById: async (req, res) => {   
+  }
+  export const createJob_offersById= async (req, res) => {   
     try {
       const { title, description, requirement, location , salary  , posted_by, category_id } = req.body;
       const job_offers  = await prisma.job_offers .create({
@@ -44,8 +44,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  updateJob_offersById: async (req, res) => {
+  }
+  export const updateJob_offersById= async (req, res) => {
     try {
       const { id } = req.params;
       const { title, description, requirement, location , salary  , posted_by, category_id } = req.body;
@@ -66,8 +66,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  deleteJob_offersById: async (req, res) => {
+  }
+  export const deleteJob_offersById= async (req, res) => {
     try {
       const { id } = req.params;
       await prisma.job_offers .delete({
@@ -81,4 +81,3 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   }
-}

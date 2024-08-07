@@ -1,8 +1,8 @@
 import { prisma } from'../config/prismaClient';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
-module.exports = {
-  getAllRole: async (req, res) => {
+
+export const getAllRole= async (req, res) => {
     try {
       const role = await prisma.role.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
@@ -10,8 +10,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  getRoleById: async (req, res) => {
+  }
+  export const getRoleById= async (req, res) => {
     try {
       const { id } = req.params;
       const role = await prisma.role.findUnique({
@@ -24,8 +24,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  createRole: async (req, res) => {   
+  }
+  export const  createRole= async (req, res) => {   
     try {
       const { name, description } = req.body;
       const role = await prisma.role.create({
@@ -38,9 +38,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  updateRole: async (req, res) => {
+  export const updateRole= async (req, res) => {
     try {
       const { id } = req.params;
       const { name, description }= req.body;
@@ -55,8 +55,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  deleteRole: async (req, res) => {
+  }
+  export const deleteRole= async (req, res) => {
     try {
       const { id } = req.params;
       await prisma.role.delete({
@@ -70,4 +70,3 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   }
-}

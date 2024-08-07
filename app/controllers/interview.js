@@ -1,8 +1,8 @@
 import { prisma } from '../config/prismaClient';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
-module.exports = {
-  getAllInterview: async (req, res) => {
+
+export const getAllInterview= async (req, res) => {
     try {
       const interview = await prisma.interview.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
@@ -10,8 +10,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  getInterviewById: async (req, res) => {
+  }
+  export const getInterviewById= async (req, res) => {
     try {
       const { id } = req.params;
       const interview = await prisma.interview.findUnique({
@@ -24,8 +24,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  createInterview: async (req, res) => {   
+  }
+  export const createInterview= async (req, res) => {   
     try {
       const { location, meeting_link, application_id } = req.body;
       const interview = await prisma.interview.create({
@@ -40,9 +40,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  updateInterview: async (req, res) => {
+  export const updateInterview= async (req, res) => {
     try {
       const { id } = req.params;
       const { location, meeting_link, application_id } = req.body;
@@ -59,8 +59,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  deleteInterview: async (req, res) => {
+  }
+  export const deleteInterview= async (req, res) => {
     try {
       const { id } = req.params;
       await prisma.interview.delete({
@@ -74,4 +74,3 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   }
-}

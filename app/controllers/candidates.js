@@ -1,8 +1,8 @@
 import { prisma } from '../config/prismaClient';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
-module.exports = {
-  getAllCandidat: async (req, res) => {
+
+export const getAllCandidat= async (req, res) => {
     try {
       const candidats = await prisma.candidat.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
@@ -10,8 +10,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  getCandidatById: async (req, res) => {
+  }
+  export const getCandidatById= async (req, res) => {
     try {
       const { id } = req.params;
       const candidat = await prisma.candidat.findUnique({
@@ -24,8 +24,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  createCandidat: async (req, res) => {   
+  }
+  export const createCandidat= async (req, res) => {   
     try {
       const { prenom, nom, email, cv , experince  , telephone, resume } = req.body;
       const candidat = await prisma.candidat.create({
@@ -43,9 +43,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  updateCandidat: async (req, res) => {
+  export const updateCandidat= async (req, res) => {
     try {
       const { id } = req.params;
       const { prenom, nom, email, cv , experince  , telephone, resume } = req.body;
@@ -65,8 +65,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  deleteCandidat: async (req, res) => {
+  }
+  export const deleteCandidat= async (req, res) => {
     try {
       const { id } = req.params;
       await prisma.candidat.delete({
@@ -80,4 +80,3 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   }
-}

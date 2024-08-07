@@ -1,8 +1,8 @@
 import { prisma } from '../config/prismaClient';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
-module.exports = {
-  getAllNotifications: async (req, res) => {
+
+export const getAllNotifications= async (req, res) => {
     try {
       const notifications = await prisma.notifications.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
@@ -10,8 +10,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  getNotificationsById: async (req, res) => {
+  }
+  export const getNotificationsById= async (req, res) => {
     try {
       const { id } = req.params;
       const notifications = await prisma.notifications.findUnique({
@@ -24,9 +24,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  createNotifications: async (req, res) => {   
+  export const createNotifications= async (req, res) => {   
     try {
       const { user_id, message, read } = req.body;
       const notifications = await prisma.notifications.create({
@@ -40,9 +40,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  updateNotifications: async (req, res) => {
+  export const updateNotifications= async (req, res) => {
     try {
       const { id } = req.params;
       const { user_id, message, read }= req.body;
@@ -58,8 +58,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  deleteNotifications: async (req, res) => {
+  }
+
+  export const deleteNotifications= async (req, res) => {
     try {
       const { id } = req.params;
       await prisma.notifications.delete({
@@ -73,4 +74,3 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   }
-}

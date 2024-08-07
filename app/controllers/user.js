@@ -1,8 +1,8 @@
 import { prisma } from "../config/prismaClient";
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
-module.exports = {
-  getAllUser: async (req, res) => {
+
+export const getAllUser = async (req, res) => {
     try {
       const users = await prisma.user.findMany();
       console.log("users : ", users);
@@ -12,8 +12,8 @@ module.exports = {
       console.log("errir : ", error);
       res.status(500).json({ error: error.message });
     }
-  },
-  getUserById: async (req, res) => {
+  }
+  export const getUserById= async (req, res) => {
     try {
       const { id } = req.params;
       const user = await prisma.user.findUnique({
@@ -26,8 +26,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  createUser: async (req, res) => {
+  }
+  export const createUser= async (req, res) => {
     try {
       const { user_name, password, email, id_role } = req.body;
       const user = await prisma.user.create({
@@ -42,8 +42,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  updateUser: async (req, res) => {
+  }
+  export const updateUser= async (req, res) => {
     try {
       const { id } = req.params;
       const { user_name, password, email, id_role } = req.body;
@@ -60,8 +60,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  deleteUser: async (req, res) => {
+  }
+  export const deleteUser= async (req, res) => {
     try {
       const { id } = req.params;
       await prisma.user.delete({
@@ -74,5 +74,5 @@ module.exports = {
       }
       res.status(500).json({ error: error.message });
     }
-  },
-};
+  }
+

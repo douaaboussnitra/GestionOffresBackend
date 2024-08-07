@@ -1,8 +1,8 @@
 import { prisma } from '../config/prismaClient';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
-module.exports = {
-  getAllCategory: async (req, res) => {
+
+export const etAllCategory= async (req, res) => {
     try {
       const category = await prisma.category.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
@@ -10,9 +10,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  getCategoryById: async (req, res) => {
+  export const getCategoryById= async (req, res) => {
     try {
       const { id } = req.params;
       const category = await prisma.category.findUnique({
@@ -25,8 +25,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  createCategory: async (req, res) => {   
+  }
+  export const createCategory= async (req, res) => {   
     try {
       const { name, job_offers, skills} = req.body;
       const category = await prisma.category.create({
@@ -40,8 +40,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  updateCategory: async (req, res) => {
+  }
+  export const updateCategory= async (req, res) => {
     try {
       const { id } = req.params;
       const { name, job_offers, skills} = req.body;
@@ -56,9 +56,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  deleteCategory: async (req, res) => {
+  export const deleteCategory= async (req, res) => {
     try {
       const { id } = req.params;
       await prisma.category.delete({
@@ -72,4 +72,3 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   }
-}

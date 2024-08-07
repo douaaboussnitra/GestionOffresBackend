@@ -2,10 +2,8 @@ import { prisma } from '../config/prismaClient';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
 
-module.exports = {
 
-
-  getAllApplication: async (req, res) => {
+   export const  getAllApplication= async (req, res) => {
     try {
       const application = await prisma.application.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
@@ -13,9 +11,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  getApplicationById: async (req, res) => {
+  export const getApplicationById= async (req, res) => {
     try {
       const { id } = req.params;
       const application = await prisma.application.findUnique({
@@ -28,9 +26,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  createApplication: async (req, res) => {   
+  export const createApplication=async (req, res) => {   
     try {
       const { candidate_id, job_offer_id } = req.body;
       const application = await prisma.application.create({
@@ -43,9 +41,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  updateApplication: async (req, res) => {
+  export const  updateApplication= async (req, res) => {
     try {
       const { id } = req.params;
       const { candidate_id, job_offer_id } = req.body;
@@ -60,9 +58,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
-  deleteApplication: async (req, res) => {
+  export const  deleteApplication= async (req, res) => {
     try {
       const { id } = req.params;
       await prisma.application.delete({
@@ -76,5 +74,4 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   }
-}
 

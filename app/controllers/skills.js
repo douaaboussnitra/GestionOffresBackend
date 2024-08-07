@@ -1,8 +1,8 @@
 import { prisma } from '../config/prismaClient';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
-module.exports = {
-  getAllSkills: async (req, res) => {
+
+export const getAllSkills= async (req, res) => {
     try {
       const skillss = await prisma.skills.findMany();
       //const result = await pool.query('SELECT * FROM skills');
@@ -10,8 +10,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  getSkillsById: async (req, res) => {
+  }
+  export const getSkillsById= async (req, res) => {
     try {
       const { id } = req.params;
       const skills = await prisma.skills.findUnique({
@@ -24,8 +24,8 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  createSkills: async (req, res) => {   
+  }
+  export const createSkills= async (req, res) => {   
     try {
       const { name, description, category_id } = req.body;
       const skills = await prisma.skills.create({
@@ -41,14 +41,10 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
+  }
 
 
- 
-
-
-
-  updateSkills: async (req, res) => {
+  export const updateSkills= async (req, res) => {
     try {
       const { id } = req.params;
       const { name, description, category_id } = req.body;
@@ -66,8 +62,9 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  deleteskills: async (req, res) => {
+  }
+
+  export const deleteskills= async (req, res) => {
     try {
       const { id } = req.params;
       await prisma.skills.delete({
@@ -81,4 +78,3 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   }
-}
