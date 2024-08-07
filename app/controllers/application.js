@@ -1,8 +1,10 @@
-const createApplication = require('express/lib/express');
-const { prisma } = require('../config/prismaClient');
+import { prisma } from '../config/prismaClient';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
+
 module.exports = {
+
+
   getAllApplication: async (req, res) => {
     try {
       const application = await prisma.application.findMany();
@@ -12,6 +14,7 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   },
+
   getApplicationById: async (req, res) => {
     try {
       const { id } = req.params;
@@ -26,6 +29,7 @@ module.exports = {
       res.status(500).json({ error: error.message });
     }
   },
+
   createApplication: async (req, res) => {   
     try {
       const { candidate_id, job_offer_id } = req.body;

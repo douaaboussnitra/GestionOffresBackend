@@ -1,4 +1,4 @@
-const { prisma } = require('../config/prismaClient');
+import { prisma } from '../config/prismaClient';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
 module.exports = {

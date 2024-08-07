@@ -1,34 +1,34 @@
-const express = require("express");
+import express, { json, urlencoded } from "express";
 
-const { applicationRouter } = require("./app/routes/application.js");
+import { applicationRouter } from "./app/routes/application.js";
 
 // const authRoutes =require('./app/routes/auth.js');
 
-const { condidateRouter } = require("./app/routes/candidates.js");
+import { condidateRouter } from "./app/routes/candidates.js";
 
-const { categoryRouter } = require("./app/routes/category.js");
+import { categoryRouter } from "./app/routes/category.js";
 
-const { interviewRouter } = require("./app/routes/interview.js");
+import { interviewRouter } from "./app/routes/interview.js";
 
-const { jobOfferRouter } = require("./app/routes/job-offers.js");
+import { jobOfferRouter } from "./app/routes/job-offers.js";
 
-const { notificationRouter } = require("./app/routes/notifications.js");
+import { notificationRouter } from "./app/routes/notifications.js";
 
-const { roleRouter } = require("./app/routes/role.js");
+import { roleRouter } from "./app/routes/role.js";
 
-const { skillRouter } = require("./app/routes/skills.js");
+import { skillRouter } from "./app/routes/skills.js";
 
-const { userRouter } = require("./app/routes/user.js");
+import { userRouter } from "./app/routes/user.js";
 
-const cors = require("cors");
+import cors from "cors";
 const app = express();
 
 var corsOption = {
   origin: "http://localhost:4200",
 };
 app.use(cors(corsOption));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 // const { testDbConnection } = require('./config/db');
 // app.use(cors());
@@ -63,7 +63,7 @@ const cors = require('cors');
 const categorieEmploieRoutes = require('./routes/categorie_emploi_routes');
 const posteRoutes = require('./routes/poste_routes');
 const organisationRoutes = require('./routes/organisation_routes');
-const candidatRoutes = require('./routes/candidat_routes').default;
+const candidatRoutes = require('./routes/candidat_routes');
 const recruteurRoutes = require('./routes/recruteur_routes');
 const offreEmploiRoutes = require('./routes/offre_emploi_routes');
 

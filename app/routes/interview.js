@@ -1,11 +1,5 @@
-const {
-  getAllInterview,
-  getInterviewById,
-  createInterview,
-  updateInterview,
-  deleteInterview,
-} = require("../controllers/interview");
-const { Router } = require("express");
+import { getAllInterview, getInterviewById, createInterview, updateInterview, deleteInterview } from "../controllers/interview";
+import { Router } from "express";
 
 const interviewRouter = Router();
 interviewRouter.get("/", getAllInterview);
@@ -14,4 +8,4 @@ interviewRouter.post("/", createInterview);
 interviewRouter.put("/:id", updateInterview);
 interviewRouter.delete("/:id", deleteInterview);
 
-module.exports = { interviewRouter };
+export default { interviewRouter };

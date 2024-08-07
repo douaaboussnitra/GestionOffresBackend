@@ -1,11 +1,5 @@
-const {
-  getAllCategory,
-  getCategoryById,
-  createCategory,
-  updateCategory,
-  deleteCategory,
-} = require("../controllers/category");
-const { Router } = require("express");
+import { getAllCategory, getCategoryById, createCategory, updateCategory, deleteCategory } from "../controllers/category";
+import { Router } from "express";
 
 const categoryRouter = Router();
 categoryRouter.get("/", getAllCategory);
@@ -14,4 +8,4 @@ categoryRouter.post("/", createCategory);
 categoryRouter.put("/:id", updateCategory);
 categoryRouter.delete("/:id", deleteCategory);
 
-module.exports = { categoryRouter };
+export default { categoryRouter };
