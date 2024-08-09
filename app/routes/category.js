@@ -1,4 +1,4 @@
-import { getAllCategory, getCategoryById, createCategory, updateCategory, deleteCategory } from "../controllers/category";
+import { getAllCategory, getCategoryById, createCategory, updateCategory, deleteCategory } from "../controllers/category.js";
 import { Router } from "express";
 
 const categoryRouter = Router();
@@ -8,4 +8,4 @@ categoryRouter.post("/", createCategory);
 categoryRouter.put("/:id", updateCategory);
 categoryRouter.delete("/:id", deleteCategory);
 
-export default { categoryRouter };
+export default  categoryRouter 

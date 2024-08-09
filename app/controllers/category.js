@@ -1,8 +1,16 @@
-import { prisma } from '../config/prismaClient';
+import prisma from '../config/prismaClient.js';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
 
-export const etAllCategory= async (req, res) => {
+/*model Category {
+  id       Int      @id @default(autoincrement())
+  name     String
+  description String
+  skills   Skills[]
+}
+*/
+
+export const getAllCategory= async (req, res) => {
     try {
       const category = await prisma.category.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
@@ -28,12 +36,11 @@ export const etAllCategory= async (req, res) => {
   }
   export const createCategory= async (req, res) => {   
     try {
-      const { name, job_offers, skills} = req.body;
+      const { name, description} = req.body;
       const category = await prisma.category.create({
         data: {
-            name,
-            job_offers,
-            skills
+          name,
+          description
         }
       })
       res.status(201).json(category);
@@ -44,12 +51,11 @@ export const etAllCategory= async (req, res) => {
   export const updateCategory= async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, job_offers, skills} = req.body;
+      const { name, description } = req.body;
       const updateCategory = await prisma.category.update({
         data: {
             name,
-            job_offers,
-            skills
+            description
         }
       })
       res.json(updateCategory);

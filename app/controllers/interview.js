@@ -1,6 +1,17 @@
-import { prisma } from '../config/prismaClient';
+import prisma from '../config/prismaClient.js';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
+
+/*model Interview {
+  id            Int         @id @default(autoincrement())
+  applicationId Int
+  location      String
+  link_meet     String
+  application   Application @relation(fields: [applicationId], references: [id])
+  candidatId    Int       
+  candidat      Candidat    @relation("CandidatInterviews", fields: [candidatId], references: [id]) 
+  Application Application[] @relation("ApplicationInterviews")
+}*/
 
 export const getAllInterview= async (req, res) => {
     try {
@@ -27,13 +38,13 @@ export const getAllInterview= async (req, res) => {
   }
   export const createInterview= async (req, res) => {   
     try {
-      const { location, meeting_link, application_id } = req.body;
+      const { applicationId, location, link_meet,candidatId } = req.body;
       const interview = await prisma.interview.create({
         data: {
-            location,
-          meeting_link,
-          application_id
-          
+          applicationId,
+          location,
+          link_meet,
+          candidatId
         }
       })
       res.status(201).json(interview);
@@ -45,13 +56,14 @@ export const getAllInterview= async (req, res) => {
   export const updateInterview= async (req, res) => {
     try {
       const { id } = req.params;
-      const { location, meeting_link, application_id } = req.body;
+      const { applicationId, location, link_meet,candidatId } = req.body;
       const updatedIinterview = await prisma.interview.update({
         where: { id: parseInt(id) },
         data: {
-            location,
-          meeting_link,
-          application_id
+          applicationId,
+          location,
+          link_meet,
+          candidatId
           
         }
       })

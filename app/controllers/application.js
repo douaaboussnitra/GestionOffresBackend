@@ -1,6 +1,17 @@
-import { prisma } from '../config/prismaClient';
+import  prisma  from '../config/prismaClient.js';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
+
+/*model Application {
+  id          Int          @id @default(autoincrement())
+  candidateId Int
+  jobOfferId  Int
+  Candidat    Candidat     @relation(fields: [candidateId], references: [id])
+  JobOffer    JobOffer     @relation(fields: [jobOfferId], references: [id])
+  Interviews  Interview[]  @relation("ApplicationInterviews") // Added opposite relation field
+
+  Interview Interview[]
+} */
 
 
    export const  getAllApplication= async (req, res) => {
@@ -30,11 +41,11 @@ import { prisma } from '../config/prismaClient';
 
   export const createApplication=async (req, res) => {   
     try {
-      const { candidate_id, job_offer_id } = req.body;
+      const { candidateId, jobOfferId } = req.body;
       const application = await prisma.application.create({
         data: {
-            candidate_id,
-            job_offer_id
+          candidateId,
+          jobOfferId
         }
       })
       res.status(201).json(application);
@@ -46,12 +57,12 @@ import { prisma } from '../config/prismaClient';
   export const  updateApplication= async (req, res) => {
     try {
       const { id } = req.params;
-      const { candidate_id, job_offer_id } = req.body;
+      const { candidateId, jobOfferId } = req.body;
       const updateApplication = await prisma.application.update({
         where: { id: parseInt(id) },
         data: {
-            candidate_id,
-            job_offer_id
+          candidateId,
+          jobOfferId
         }
       })
       res.json(updateApplication);

@@ -1,6 +1,22 @@
-import { prisma } from '../config/prismaClient';
+import prisma from '../config/prismaClient.js';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
+
+/*model Candidat {
+  id          Int           @id @default(autoincrement())
+  experience  String
+  fullname    String
+  email       String
+  phone       String
+  cv          String
+  roleId      Int
+  Role        Role          @relation("CandidatRole", fields: [roleId], references: [id])
+  Application Application[]
+  Validation  Validation?
+  Interview   Interview[]   @relation("CandidatInterviews") // Added relation name
+  skills      Skills[]      @relation("CandidatSkills")
+  User        User?         @relation("UserCandidat")
+}*/
 
 export const getAllCandidat= async (req, res) => {
     try {
@@ -27,16 +43,16 @@ export const getAllCandidat= async (req, res) => {
   }
   export const createCandidat= async (req, res) => {   
     try {
-      const { prenom, nom, email, cv , experince  , telephone, resume } = req.body;
+      const { experience, fullname, email, phone , cv  , roleId } = req.body;
       const candidat = await prisma.candidat.create({
         data: {
-          prenom,
-          nom,
+          experience,
+          fullname,
           email,
-          telephone,
-          experince ,
-          cv,
-          resume
+          phone,
+          cv ,
+          roleId
+      
         }
       })
       res.status(201).json(candidat);
@@ -48,17 +64,16 @@ export const getAllCandidat= async (req, res) => {
   export const updateCandidat= async (req, res) => {
     try {
       const { id } = req.params;
-      const { prenom, nom, email, cv , experince  , telephone, resume } = req.body;
+      const {experience, fullname, email, phone , cv  , roleId } = req.body;
       const updatedCandidat = await prisma.candidat.update({
         where: { id: parseInt(id) },
         data: {
-            prenom,
-            nom,
-            email,
-            telephone,
-            experince ,
-            cv,
-            resume
+          experience,
+          fullname,
+          email,
+          phone,
+          cv ,
+          roleId
           }
       })
       res.json(updatedCandidat);

@@ -1,6 +1,16 @@
-import { prisma } from'../config/prismaClient';
+import prisma from'../config/prismaClient.js';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
+
+/* model Role {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String
+  Users       User[]      @relation
+  Admins      Admin[]     @relation("AdminRole")
+  Recruteurs  Recruteur[] @relation("RecruteurRole")
+  Candidats   Candidat[]  @relation("CandidatRole")
+} */
 
 export const getAllRole= async (req, res) => {
     try {

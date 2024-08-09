@@ -1,6 +1,21 @@
-import { prisma } from '../config/prismaClient';
+import prisma from '../config/prismaClient.js';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
+
+
+/*model JobOffer {
+  id               Int         @id @default(autoincrement())
+  title            String
+  description      String
+  requirement      String
+  location         String
+  salary           String
+  postedBy         Int
+  type_de_contrat  String
+  niveau_hierarchique String
+  recruteur        Recruteur   @relation(fields: [postedBy], references: [id])
+  applications     Application[]
+}*/
 
 export const getAllJob_offers = async (req, res) => {
     try {

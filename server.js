@@ -1,24 +1,29 @@
 import express, { json, urlencoded } from "express";
 
-import { applicationRouter } from "./app/routes/application.js";
+import applicationRouter  from "./app/routes/application.js";
 
 // const authRoutes =require('./app/routes/auth.js');
 
-import { condidateRouter } from "./app/routes/candidates.js";
+import condidateRouter  from "./app/routes/candidates.js";
 
-import { categoryRouter } from "./app/routes/category.js";
+import categoryRouter  from "./app/routes/category.js";
 
-import { interviewRouter } from "./app/routes/interview.js";
+import interviewRouter  from "./app/routes/interview.js";
 
-import { jobOfferRouter } from "./app/routes/job-offers.js";
+import jobOfferRouter  from "./app/routes/job-offers.js";
 
-import { notificationRouter } from "./app/routes/notifications.js";
+import validationRouter  from "./app/routes/validation.js";
 
-import { roleRouter } from "./app/routes/role.js";
+import roleRouter  from "./app/routes/role.js";
 
-import { skillRouter } from "./app/routes/skills.js";
+import skillRouter  from "./app/routes/skills.js";
 
-import { userRouter } from "./app/routes/user.js";
+import userRouter  from "./app/routes/user.js";
+
+import adminRouter  from "./app/routes/admin.js";
+
+import recruteurRouter  from "./app/routes/user.js";
+
 
 import cors from "cors";
 const app = express();
@@ -42,14 +47,16 @@ app.use("/api/candidates", condidateRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/interview", interviewRouter);
 app.use("/api/joboffer", jobOfferRouter);
-app.use("/api/notification", notificationRouter);
+app.use("/api/validation", validationRouter);
 app.use("/api/role", roleRouter);
 app.use("/api/skill", skillRouter);
 app.use("/api/user", userRouter);
+app.use("/api/admin", adminRouter);
+app.use("/api/recruteur", recruteurRouter);
 
-const port = 3000;
+const port = 8080;
 app.listen(port, () => {
-  console.log("server up on port 3000");
+  console.log("server up on port 8080");
 });
 
 /*

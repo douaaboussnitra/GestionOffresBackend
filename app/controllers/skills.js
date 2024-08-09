@@ -1,6 +1,15 @@
-import { prisma } from '../config/prismaClient';
+import prisma from '../config/prismaClient.js';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
+
+
+/* model Skills {
+  id          Int      @id @default(autoincrement())
+  name        String
+  categoryId  Int
+  category    Category @relation(fields: [categoryId], references: [id])
+  candidats   Candidat[] @relation("CandidatSkills")
+} */
 
 export const getAllSkills= async (req, res) => {
     try {
@@ -27,14 +36,12 @@ export const getAllSkills= async (req, res) => {
   }
   export const createSkills= async (req, res) => {   
     try {
-      const { name, description, category_id } = req.body;
+      const { name, categoryId } = req.body;
       const skills = await prisma.skills.create({
         data: {
             name,
-          nom,
-          description,
-          category_id
-          
+            categoryId
+
         }
       })
       res.status(201).json(skills);
@@ -47,15 +54,12 @@ export const getAllSkills= async (req, res) => {
   export const updateSkills= async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, description, category_id } = req.body;
+      const { name, categoryId} = req.body;
       const updatedskills = await prisma.skills.update({
         where: { id: parseInt(id) },
         data: {
-            name,
-          nom,
-          description,
-          category_id
-          
+          name,
+          categoryId
         }
       })
       res.json(updatedskills);

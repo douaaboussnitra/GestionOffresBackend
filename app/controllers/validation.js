@@ -1,12 +1,22 @@
-import { prisma } from'../config/prismaClient';
+import prisma from '../config/prismaClient.js';
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
 
+/*model Validation {
+  id           Int       @id @default(autoincrement())
+  candidatId   Int @unique
+  validated_by Int
+  result       String
+  notification String
+  candidat     Candidat  @relation(fields: [candidatId], references: [id])
+  recruteur    Recruteur @relation(fields: [validated_by], references: [id])
+}*/
+
 export const getAllValidation= async (req, res) => {
     try {
-      const validations = await prisma.validation.findMany();
-      //const result = await pool.query('SELECT * FROM validation');
-      res.json(validations);
+      const validation = await prisma.validation.findMany();
+      //const result = await pool.query('SELECT * FROM candidat');
+      res.json(validation);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -25,14 +35,16 @@ export const getAllValidation= async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   }
+
   export const createValidation= async (req, res) => {   
     try {
-      const { candidate_id, validated_by, result } = req.body;
+      const { user_id, validated_by,result, notification } = req.body;
       const validation = await prisma.validation.create({
         data: {
-            candidate_id,
+          user_id,
             validated_by,
-            result
+            result,
+            notification
         }
       })
       res.status(201).json(validation);
@@ -44,20 +56,23 @@ export const getAllValidation= async (req, res) => {
   export const updateValidation= async (req, res) => {
     try {
       const { id } = req.params;
-      const { candidate_id, validated_by, result } = req.body;
-      const updatedvalidation = await prisma.validation.update({
+      const { user_id, validated_by,result, notification }= req.body;
+      const updatedValidation= await prisma.validation.update({
         where: { id: parseInt(id) },
         data: {
-            candidate_id,
+            user_id,
             validated_by,
-            result
+            result,
+            notification
+
         }
       })
-      res.json(updatedvalidation);
+      res.json(updatedValidation);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   }
+
   export const deleteValidation= async (req, res) => {
     try {
       const { id } = req.params;

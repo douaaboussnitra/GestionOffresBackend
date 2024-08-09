@@ -1,4 +1,4 @@
-import { getAllInterview, getInterviewById, createInterview, updateInterview, deleteInterview } from "../controllers/interview";
+import { getAllInterview, getInterviewById, createInterview, updateInterview, deleteInterview } from "../controllers/interview.js";
 import { Router } from "express";
 
 const interviewRouter = Router();
@@ -8,4 +8,4 @@ interviewRouter.post("/", createInterview);
 interviewRouter.put("/:id", updateInterview);
 interviewRouter.delete("/:id", deleteInterview);
 
-export default { interviewRouter };
+export default  interviewRouter 
