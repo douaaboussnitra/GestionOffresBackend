@@ -18,7 +18,7 @@ import  prisma  from '../config/prismaClient.js';
     try {
       const application = await prisma.application.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
-      res.json(application);
+      res.status(200).json(application);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -33,7 +33,7 @@ import  prisma  from '../config/prismaClient.js';
       if (!application) {
         return res.status(404).json({ error: 'application non trouvé' });
       }
-      res.json(application);
+      res.status(200).json(application);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -65,7 +65,7 @@ import  prisma  from '../config/prismaClient.js';
           jobOfferId
         }
       })
-      res.json(updateApplication);
+      res.status(200).json(updateApplication);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

@@ -16,7 +16,7 @@ export const getAllRole= async (req, res) => {
     try {
       const role = await prisma.role.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
-      res.json(role);
+      res.status(200).json(role);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -30,7 +30,7 @@ export const getAllRole= async (req, res) => {
       if (!role) {
         return res.status(404).json({ error: 'role non trouvé' });
       }
-      res.json(role);
+      res.status(200).json(role);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -61,7 +61,7 @@ export const getAllRole= async (req, res) => {
             description
           }
       })
-      res.json(updatedRole);
+      res.status(200).json(updatedRole);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

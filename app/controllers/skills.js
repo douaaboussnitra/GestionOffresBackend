@@ -15,7 +15,7 @@ export const getAllSkills= async (req, res) => {
     try {
       const skillss = await prisma.skills.findMany();
       //const result = await pool.query('SELECT * FROM skills');
-      res.json(skillss);
+      res.status(200).json(skillss);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -29,7 +29,7 @@ export const getAllSkills= async (req, res) => {
       if (!skills) {
         return res.status(404).json({ error: 'skills non trouvé' });
       }
-      res.json(skills);
+      res.status(200).json(skills);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -62,7 +62,7 @@ export const getAllSkills= async (req, res) => {
           categoryId
         }
       })
-      res.json(updatedskills);
+      res.status(200).json(updatedskills);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

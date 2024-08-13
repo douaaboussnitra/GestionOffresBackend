@@ -17,7 +17,7 @@ export const getAllInterview= async (req, res) => {
     try {
       const interview = await prisma.interview.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
-      res.json(interview);
+      res.status(200).json(interview);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -31,7 +31,7 @@ export const getAllInterview= async (req, res) => {
       if (!interview) {
         return res.status(404).json({ error: 'interview non trouvé' });
       }
-      res.json(interview);
+      res.status(200).json(interview);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -67,7 +67,7 @@ export const getAllInterview= async (req, res) => {
           
         }
       })
-      res.json(updatedIinterviewt);
+      res.status(200).json(updatedIinterviewt);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

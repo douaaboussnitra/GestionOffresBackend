@@ -22,7 +22,7 @@ export const getAllCandidat= async (req, res) => {
     try {
       const candidats = await prisma.candidat.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
-      res.json(candidats);
+      res.status(200).json(candidats);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -36,7 +36,7 @@ export const getAllCandidat= async (req, res) => {
       if (!candidat) {
         return res.status(404).json({ error: 'Candidat non trouvé' });
       }
-      res.json(candidat);
+      res.status(200).json(candidat);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -76,7 +76,7 @@ export const getAllCandidat= async (req, res) => {
           roleId
           }
       })
-      res.json(updatedCandidat);
+      res.status(200).json(updatedCandidat);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

@@ -15,8 +15,8 @@ import prisma from'../config/prismaClient.js';
 export const getAllAdmin= async (req, res) => {
     try {
       const admin = await prisma.admin.findMany();
-      //const result = await pool.query('SELECT * FROM validation');
-      res.json(admin);
+      //const result = await pool.query('SELECT * FROM admin');
+      res.status(200).json(admin);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -30,7 +30,7 @@ export const getAllAdmin= async (req, res) => {
       if (!admin) {
         return res.status(404).json({ error: 'Admin non trouvé' });
       }
-      res.json(admin);
+      res.status(200).json(admin);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -65,7 +65,7 @@ export const getAllAdmin= async (req, res) => {
           roleId
         }
       })
-      res.json(updatedAdmin);
+      res.status(200).json(updatedAdmin);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

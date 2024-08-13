@@ -16,7 +16,7 @@ export const getAllValidation= async (req, res) => {
     try {
       const validation = await prisma.validation.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
-      res.json(validation);
+      res.status(200).json(validation);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -30,7 +30,7 @@ export const getAllValidation= async (req, res) => {
       if (!validation) {
         return res.status(404).json({ error: 'validation non trouvé' });
       }
-      res.json(validation);
+      res.status(200).json(validation);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -67,7 +67,7 @@ export const getAllValidation= async (req, res) => {
 
         }
       })
-      res.json(updatedValidation);
+      res.status(200).json(updatedValidation);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

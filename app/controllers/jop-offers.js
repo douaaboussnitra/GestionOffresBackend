@@ -21,7 +21,7 @@ export const getAllJob_offers = async (req, res) => {
     try {
       const job_offers = await prisma.job_offers .findMany();
       //const result = await pool.query('SELECT * FROM candidat');
-      res.json(job_offers );
+      res.status(200).json(job_offers );
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -35,7 +35,7 @@ export const getAllJob_offers = async (req, res) => {
       if (!job_offers ) {
         return res.status(404).json({ error: 'job_offers  non trouvé' });
       }
-      res.json(job_offers );
+      res.status(200).json(job_offers );
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -77,7 +77,7 @@ export const getAllJob_offers = async (req, res) => {
           category_id
         }
       })
-      res.json(updatedJob_offersById);
+      res.status(200).json(updatedJob_offersById);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

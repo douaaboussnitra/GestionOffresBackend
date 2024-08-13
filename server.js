@@ -24,14 +24,19 @@ import adminRouter  from "./app/routes/admin.js";
 
 import recruteurRouter  from "./app/routes/user.js";
 
+import authRouter  from "./app/routes/auth.js";
 
 import cors from "cors";
+
 const app = express();
 
-var corsOption = {
-  origin: "http://localhost:4200",
+const corsOptions = {
+  origin: ["http://localhost:4200"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
 };
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
@@ -42,7 +47,7 @@ app.use(urlencoded({ extended: true }));
 // testDbConnection();
 
 app.use("/api/application", applicationRouter);
-// app.use('/api/poste', authRoutes);
+app.use('/api/auth', authRouter);
 app.use("/api/candidates", condidateRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/interview", interviewRouter);
@@ -53,6 +58,7 @@ app.use("/api/skill", skillRouter);
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/recruteur", recruteurRouter);
+
 
 const port = 8080;
 app.listen(port, () => {

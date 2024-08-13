@@ -21,7 +21,7 @@ export const getAllUser= async (req, res) => {
   try {
     const user = await prisma.user.findMany();
     //const result = await pool.query('SELECT * FROM user');
-    res.json(user);
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -35,7 +35,7 @@ export const getUserById= async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'user non trouvé' });
     }
-    res.json(user);
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -68,7 +68,7 @@ export const updateUser= async (req, res) => {
         categoryId
       }
     })
-    res.json(updatedUser);
+    res.status(200).json(updatedUser);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

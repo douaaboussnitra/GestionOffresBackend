@@ -24,7 +24,7 @@ export const getAllRecruteur= async (req, res) => {
     try {
       const recruteur = await prisma.recruteur.findMany();
       //const result = await pool.query('SELECT * FROM validation');
-      res.json(recruteur);
+      res.status(200).json(recruteur);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -38,7 +38,7 @@ export const getAllRecruteur= async (req, res) => {
       if (!recruteur) {
         return res.status(404).json({ error: 'Recruteur non trouvé' });
       }
-      res.json(recruteur);
+      res.status(200).json(recruteur);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -71,7 +71,7 @@ export const getAllRecruteur= async (req, res) => {
             result
         }
       })
-      res.json(updatedRecruteur);
+      res.status(200).json(updatedRecruteur);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
