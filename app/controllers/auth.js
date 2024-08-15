@@ -9,6 +9,7 @@ export const login = async (req, res) => {
       where: { email },
     });
 
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

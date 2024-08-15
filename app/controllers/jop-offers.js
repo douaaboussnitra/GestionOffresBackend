@@ -19,7 +19,8 @@ import prisma from '../config/prismaClient.js';
 
 export const getAllJob_offers = async (req, res) => {
     try {
-      const job_offers = await prisma.job_offers .findMany();
+      const job_offers = await prisma.jobOffer .findMany();
+      console.log(job_offers)
       //const result = await pool.query('SELECT * FROM candidat');
       res.status(200).json(job_offers );
     } catch (error) {
