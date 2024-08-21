@@ -48,7 +48,7 @@ app.use(urlencoded({ extended: true }));
 
 app.use("/api/application", applicationRouter);
 app.use('/api/auth', authRouter);
-app.use("/api/candidates", condidateRouter);
+app.use("/api/candidat", condidateRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/interview", interviewRouter);
 app.use("/api/joboffer", jobOfferRouter);
@@ -57,7 +57,7 @@ app.use("/api/role", roleRouter);
 app.use("/api/skill", skillRouter);
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
-app.use("/api/recruteur", recruteurRouter);
+app.use("/api/recruiter", recruteurRouter);
 
 
 const port = 8080;
