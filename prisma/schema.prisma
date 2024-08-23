@@ -57,12 +57,11 @@ model Candidat {
   fullname    String
   email       String
   phone       String
-  cv          String
   roleId      Int
   Role        Role          @relation("CandidatRole", fields: [roleId], references: [id])
   Application Application[]
   Validation  Validation?
-  Interview   Interview[]   @relation("CandidatInterviews") // Added relation name
+  // Interview   Interview[]   @relation("CandidatInterviews") // Added relation name
   skills      Skills[]      @relation("CandidatSkills")
   User        User?         @relation("UserCandidat")
 }
@@ -97,9 +96,8 @@ model Application {
   jobOfferId  Int
   Candidat    Candidat     @relation(fields: [candidateId], references: [id])
   JobOffer    JobOffer     @relation(fields: [jobOfferId], references: [id])
-  Interviews  Interview[]  @relation("ApplicationInterviews") // Added opposite relation field
-
-  Interview Interview[]
+  // Interviews  Interview[]  @relation("ApplicationInterviews") // Added opposite relation field
+  // Interview Interview[]
 }
 
 model Validation {
@@ -112,16 +110,16 @@ model Validation {
   recruteur    Recruteur @relation(fields: [validated_by], references: [id])
 }
 
-model Interview {
-  id            Int         @id @default(autoincrement())
-  applicationId Int
-  location      String
-  link_meet     String
-  application   Application @relation(fields: [applicationId], references: [id])
-  candidatId    Int       
-  candidat      Candidat    @relation("CandidatInterviews", fields: [candidatId], references: [id]) 
-  Application Application[] @relation("ApplicationInterviews")
-}
+// model Interview {
+//   id            Int         @id @default(autoincrement())
+//   applicationId Int
+//   location      String
+//   link_meet     String
+//   application   Application @relation(fields: [applicationId], references: [id])
+//   candidatId    Int       
+//   candidat      Candidat    @relation("CandidatInterviews", fields: [candidatId], references: [id]) 
+//   Application Application[] @relation("ApplicationInterviews")
+// }
 
 model Skills {
   id          Int      @id @default(autoincrement())

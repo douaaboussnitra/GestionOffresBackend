@@ -65,6 +65,7 @@ export const getAllCandidat= async (req, res) => {
     try {
       const { id } = req.params;
       const {experience, fullname, email, phone , cv  , roleId } = req.body;
+      console.log(req.body);
       const updatedCandidat = await prisma.candidat.update({
         where: { id: parseInt(id) },
         data: {

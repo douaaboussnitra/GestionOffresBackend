@@ -22,7 +22,7 @@ import userRouter  from "./app/routes/user.js";
 
 import adminRouter  from "./app/routes/admin.js";
 
-import recruteurRouter  from "./app/routes/user.js";
+import recruteurRouter  from "./app/routes/recruteur.js";
 
 import authRouter  from "./app/routes/auth.js";
 

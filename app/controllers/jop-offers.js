@@ -19,7 +19,7 @@ import prisma from '../config/prismaClient.js';
 
 export const getAllJob_offers = async (req, res) => {
     try {
-      const job_offers = await prisma.jobOffer .findMany();
+      const job_offers = await prisma.jobOffer.findMany();
       console.log(job_offers)
       //const result = await pool.query('SELECT * FROM candidat');
       res.status(200).json(job_offers );
@@ -30,7 +30,7 @@ export const getAllJob_offers = async (req, res) => {
   export const getJob_offersById= async (req, res) => {
     try {
       const { id } = req.params;
-      const job_offers  = await prisma.job_offers.findUnique({
+      const job_offers  = await prisma.JobOffer.findUnique({
         where: { id: parseInt(id) }
       })
       if (!job_offers ) {
@@ -44,10 +44,9 @@ export const getAllJob_offers = async (req, res) => {
   export const createJob_offersById= async (req, res) => {   
     try {
       const { title, description, requirement, location , salary  , posted_by, category_id } = req.body;
-      const job_offers  = await prisma.job_offers .create({
+      const job_offers  = await prisma.JobOffer .create({
         data: {
             title,
-          nom,
           description,
           requirement,
           location ,
@@ -65,7 +64,7 @@ export const getAllJob_offers = async (req, res) => {
     try {
       const { id } = req.params;
       const { title, description, requirement, location , salary  , posted_by, category_id } = req.body;
-      const updatedJob_offersById = await prisma.job_offers .update({
+      const updatedJob_offersById = await prisma.JobOffer .update({
         where: { id: parseInt(id) },
         data: {
             title,

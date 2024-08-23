@@ -1,9 +1,8 @@
 import { getAllJob_offers, getJob_offersById, createJob_offersById, updateJob_offersById, deleteJob_offersById } from "../controllers/jop-offers.js";
 import { Router } from "express";
-import authMiddleware from '../middlewares/jwt.js';
 const jobOfferRouter = Router();
-jobOfferRouter.get("/", authMiddleware, getAllJob_offers);
 jobOfferRouter.get("/:id", getJob_offersById);
+jobOfferRouter.get("/", getAllJob_offers);
 jobOfferRouter.post("/", createJob_offersById);
 jobOfferRouter.put("/:id", updateJob_offersById);
 jobOfferRouter.delete("/:id", deleteJob_offersById);
