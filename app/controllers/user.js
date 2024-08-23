@@ -42,12 +42,11 @@ export const getUserById= async (req, res) => {
 }
 export const createUser= async (req, res) => {   
   try {
-    const { name, categoryId } = req.body;
+    const { name, roleId } = req.body;
     const user = await prisma.user.create({
       data: {
           name,
-          categoryId
-
+          roleId
       }
     })
     res.status(201).json(user);

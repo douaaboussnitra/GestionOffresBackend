@@ -30,7 +30,7 @@ export const getAllJob_offers = async (req, res) => {
   export const getJob_offersById= async (req, res) => {
     try {
       const { id } = req.params;
-      const job_offers  = await prisma.JobOffer.findUnique({
+      const job_offers  = await prisma.jobOffer.findUnique({
         where: { id: parseInt(id) }
       })
       if (!job_offers ) {
@@ -106,7 +106,7 @@ export const updateJob_offersById = async (req, res) => {
   export const deleteJob_offersById= async (req, res) => {
     try {
       const { id } = req.params;
-      await prisma.job_offers .delete({
+      await prisma.jobOffer .delete({
         where: { id: parseInt(id) },
       });
       res.status(204).send();

@@ -32,13 +32,17 @@ export const login = async (req, res) => {
 
 export const register = async (req, res) => {
   try {
-  const { username, email, password } = req.body;
+  const { username, email, password , role } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 16);
+  const roleUser = await prisma.role.findUnique({
+    where: { id:role },
+  });
     const user = await prisma.user.create({
       data: {
         username,
         email,
         password: hashedPassword,
+        Role : roleUser
       },
     });
 

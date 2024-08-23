@@ -37,11 +37,10 @@ export const getAllRole= async (req, res) => {
   }
   export const  createRole= async (req, res) => {   
     try {
-      const { name, description } = req.body;
+      const { name} = req.body;
       const role = await prisma.role.create({
         data: {
-          name,
-          description
+          name
         }
       })
       res.status(201).json(role);
