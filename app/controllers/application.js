@@ -1,4 +1,5 @@
 import  prisma  from '../config/prismaClient.js';
+
 // middleware (func) => return (req, res) => func(req,res).catch(next(error))
 // middleware (error) => {error.codeStatus(500) -- > 200 --> 400 ->}
 
@@ -39,37 +40,55 @@ import  prisma  from '../config/prismaClient.js';
     }
   }
 
-  export const createApplication=async (req, res) => {   
-    try {
-      const { candidateId, jobOfferId } = req.body;
-      const application = await prisma.application.create({
-        data: {
-          candidateId,
-          jobOfferId
-        }
-      })
-      res.status(201).json(application);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  }
+ // Create application with file uploads
+export const createApplication = async (req, res) => {
+  try {
+    const { candidateId, jobOfferId } = req.body;
+    const { filecv, filemotiva } = req.files; // Access uploaded files
+    
+    // Save file paths
+    const filecvPath = filecv ? filecv[0].path : '';
+    const filemotivaPath = filemotiva ? filemotiva[0].path : '';
 
-  export const  updateApplication= async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { candidateId, jobOfferId } = req.body;
-      const updateApplication = await prisma.application.update({
-        where: { id: parseInt(id) },
-        data: {
-          candidateId,
-          jobOfferId
-        }
-      })
-      res.status(200).json(updateApplication);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+    const application = await prisma.application.create({
+      data: {
+        candidateId:2,
+        jobOfferId:4,
+        filecv: filecvPath,
+        filemotiva: filemotivaPath
+      }
+    });
+    res.status(201).json(application);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
+}
+
+// Update application with file uploads
+export const updateApplication = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { candidateId, jobOfferId } = req.body;
+    const { filecv, filemotiva } = req.files; // Access uploaded files
+
+    // Save file paths
+    const filecvPath = filecv ? filecv[0].path : '';
+    const filemotivaPath = filemotiva ? filemotiva[0].path : '';
+
+    const updateApplication = await prisma.application.update({
+      where: { id: parseInt(id) },
+      data: {
+        candidateId,
+        jobOfferId,
+        filecv: filecvPath,
+        filemotiva: filemotivaPath
+      }
+    });
+    res.status(200).json(updateApplication);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
 
   export const  deleteApplication= async (req, res) => {
     try {

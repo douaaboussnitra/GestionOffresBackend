@@ -39,11 +39,11 @@ model Recruteur {
   email       String
   phone       String
   description String?
-  postal_code String
+  postal_code String?
   logo        String?
-  sector      String
-  city        String
-  website     String
+  sector      String?
+  city        String?
+  website     String?
   job_offer   JobOffer[]
   roleId      Int
   Role        Role         @relation("RecruteurRole", fields: [roleId], references: [id])
@@ -53,10 +53,10 @@ model Recruteur {
 
 model Candidat {
   id          Int           @id @default(autoincrement())
-  experience  String
+  experience  String?
   fullname    String
   email       String
-  phone       String
+  phone       String?
   roleId      Int
   Role        Role          @relation("CandidatRole", fields: [roleId], references: [id])
   Application Application[]
@@ -77,23 +77,29 @@ model Role {
 }
 
 model JobOffer {
-  id               Int         @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   title            String
   description      String
-  requirement      String
+  requirements     String?
   location         String
   salary           String
+  companyName      String
   postedBy         Int
-  type_de_contrat  String
-  niveau_hierarchique String
-  recruteur        Recruteur   @relation(fields: [postedBy], references: [id])
+  contractType     String
+  hierarchyLevel   String
+  email            String
+  recruiter        Recruteur @relation(fields: [postedBy], references: [id])
   applications     Application[]
+  skills           Skills[]   @relation("JobOfferSkills")
 }
 
 model Application {
   id          Int          @id @default(autoincrement())
   candidateId Int
   jobOfferId  Int
+  created_at  DateTime @default(now())
+  filecv      String
+  filemotiva  String
   Candidat    Candidat     @relation(fields: [candidateId], references: [id])
   JobOffer    JobOffer     @relation(fields: [jobOfferId], references: [id])
   // Interviews  Interview[]  @relation("ApplicationInterviews") // Added opposite relation field
@@ -105,9 +111,11 @@ model Validation {
   candidatId   Int @unique
   validated_by Int
   result       String
+  jobOfferId   Int
   notification String
   candidat     Candidat  @relation(fields: [candidatId], references: [id])
   recruteur    Recruteur @relation(fields: [validated_by], references: [id])
+  
 }
 
 // model Interview {
@@ -127,6 +135,7 @@ model Skills {
   categoryId  Int
   category    Category @relation(fields: [categoryId], references: [id])
   candidats   Candidat[] @relation("CandidatSkills")
+  jobOffers   JobOffer[] @relation("JobOfferSkills")
 }
 
 model Category {

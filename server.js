@@ -1,4 +1,7 @@
 import express, { json, urlencoded } from "express";
+import path from 'path'; 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 import applicationRouter  from "./app/routes/application.js";
 
@@ -36,6 +39,10 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(cors(corsOptions));
 app.use(json());
 app.use(urlencoded({ extended: true }));

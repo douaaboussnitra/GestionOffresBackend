@@ -41,47 +41,68 @@ export const getAllJob_offers = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   }
-  export const createJob_offersById= async (req, res) => {   
-    try {
-      const { title, description, requirement, location , salary  , posted_by, category_id } = req.body;
-      const job_offers  = await prisma.JobOffer .create({
-        data: {
-            title,
-          description,
-          requirement,
-          location ,
-          salary,
-          posted_by,
-          category_id
-        }
-      })
-      res.status(201).json(job_offers );
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+ 
+export const createJob_offersById  = async (req, res) => {
+  try {
+    const { title, description, requirements, location, salary, companyName, postedBy, contractType, hierarchyLevel, email, skillIds } = req.body;
+
+    // Create job offer and link skills
+    const jobOffer = await prisma.jobOffer.create({
+      data: {
+        title,
+        description,
+        requirements:"",
+        location,
+        salary,
+        companyName,
+        postedBy:2,
+        contractType,
+        hierarchyLevel,
+
+
+        email,
+      //  skills: {
+    //      connect: skillIds.map(id => ({ id }))
+      //  }
+      }
+    });
+
+    res.status(201).json(jobOffer);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-  export const updateJob_offersById= async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { title, description, requirement, location , salary  , posted_by, category_id } = req.body;
-      const updatedJob_offersById = await prisma.JobOffer .update({
-        where: { id: parseInt(id) },
-        data: {
-            title,
-          nom,
-          description,
-          requirement,
-          location ,
-          salary,
-          posted_by,
-          category_id
+}
+
+
+export const updateJob_offersById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, requirements, location, salary, companyName, postedBy, contractType, hierarchyLevel, email, skillIds } = req.body;
+
+    const updatedJobOffer = await prisma.jobOffer.update({
+      where: { id: parseInt(id) },
+      data: {
+        title,
+        description,
+        requirements,
+        location,
+        salary,
+        companyName,
+        postedBy,
+        contractType,
+        hierarchyLevel,
+        email,
+        skills: {
+          set: skillIds.map(id => ({ id }))  // Replace existing skills with new ones
         }
-      })
-      res.status(200).json(updatedJob_offersById);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+      }
+    });
+
+    res.status(200).json(updatedJobOffer);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
+}
   export const deleteJob_offersById= async (req, res) => {
     try {
       const { id } = req.params;
