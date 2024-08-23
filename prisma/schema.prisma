@@ -13,25 +13,25 @@ model User {
   email       String     @unique
   password    String
   username    String
-  adminId     Int?       @unique
-  recruteurId Int?       @unique
-  candidatId  Int?       @unique
-  roleId      Int?
-  Admin       Admin?     @relation("UserAdmin", fields: [adminId], references: [id])
-  Recruteur   Recruteur? @relation("UserRecruteur", fields: [recruteurId], references: [id])
-  Candidat    Candidat?  @relation("UserCandidat", fields: [candidatId], references: [id])
-  Role        Role?      @relation(fields: [roleId], references: [id])
+  // adminId     Int?       @unique
+  // recruteurId Int?       @unique
+  // candidatId  Int?       @unique
+   roleId      Int
+  // Admin       Admin?     @relation("UserAdmin", fields: [adminId], references: [id])
+  // Recruteur   Recruteur? @relation("UserRecruteur", fields: [recruteurId], references: [id])
+  // Candidat    Candidat?  @relation("UserCandidat", fields: [candidatId], references: [id])
+  Role        Role      @relation(fields: [roleId], references: [id])
 }
 
-model Admin {
-  id       Int    @id @default(autoincrement())
-  username String
-  email    String
-  password String
-  roleId   Int
-  Role     Role   @relation("AdminRole", fields: [roleId], references: [id])
-  User     User?  @relation("UserAdmin")
-}
+// model Admin {
+//   id       Int    @id @default(autoincrement())
+//   username String
+//   email    String
+//   password String
+//   roleId   Int
+//   Role     Role   @relation("AdminRole", fields: [roleId], references: [id])
+//   User     User?  @relation("UserAdmin")
+// }
 
 model Recruteur {
   id          Int          @id @default(autoincrement())
@@ -45,9 +45,9 @@ model Recruteur {
   city        String?
   website     String?
   job_offer   JobOffer[]
-  roleId      Int
-  Role        Role         @relation("RecruteurRole", fields: [roleId], references: [id])
-  User        User?        @relation("UserRecruteur")
+  // roleId      Int
+  // Role        Role         @relation("RecruteurRole", fields: [roleId], references: [id])
+  // User        User?        @relation("UserRecruteur")
   Validations Validation[] 
 }
 
@@ -58,22 +58,23 @@ model Candidat {
   email       String
   phone       String?
   roleId      Int
-  Role        Role          @relation("CandidatRole", fields: [roleId], references: [id])
+  skills      String
+  // Role        Role          @relation("CandidatRole", fields: [roleId], references: [id])
   Application Application[]
   Validation  Validation?
   // Interview   Interview[]   @relation("CandidatInterviews") // Added relation name
-  skills      Skills[]      @relation("CandidatSkills")
-  User        User?         @relation("UserCandidat")
+  // skills      Skills[]      @relation("CandidatSkills")
+  // User        User?         @relation("UserCandidat")
 }
 
 model Role {
   id          Int         @id @default(autoincrement())
   name        String
-  description String
+  // description String
   Users       User[]      @relation
-  Admins      Admin[]     @relation("AdminRole")
-  Recruteurs  Recruteur[] @relation("RecruteurRole")
-  Candidats   Candidat[]  @relation("CandidatRole")
+  // Admins      Admin[]     @relation("AdminRole")
+  // Recruteurs  Recruteur[] @relation("RecruteurRole")
+  // Candidats   Candidat[]  @relation("CandidatRole")
 }
 
 model JobOffer {
@@ -90,7 +91,8 @@ model JobOffer {
   email            String
   recruiter        Recruteur @relation(fields: [postedBy], references: [id])
   applications     Application[]
-  skills           Skills[]   @relation("JobOfferSkills")
+  skills           String
+  // skills           Skills[]   @relation("JobOfferSkills")
 }
 
 model Application {
@@ -129,21 +131,21 @@ model Validation {
 //   Application Application[] @relation("ApplicationInterviews")
 // }
 
-model Skills {
-  id          Int      @id @default(autoincrement())
-  name        String
-  categoryId  Int
-  category    Category @relation(fields: [categoryId], references: [id])
-  candidats   Candidat[] @relation("CandidatSkills")
-  jobOffers   JobOffer[] @relation("JobOfferSkills")
-}
+// model Skills {
+//   id          Int      @id @default(autoincrement())
+//   name        String
+//   categoryId  Int
+//   category    Category @relation(fields: [categoryId], references: [id])
+//   candidats   Candidat[] @relation("CandidatSkills")
+//   jobOffers   JobOffer[] @relation("JobOfferSkills")
+// }
 
-model Category {
-  id       Int      @id @default(autoincrement())
-  name     String
-  description String
-  skills   Skills[]
-}
+// model Category {
+//   id       Int      @id @default(autoincrement())
+//   name     String
+//   description String
+//   skills   Skills[]
+// }
 enum ApplicationStatus {
   PENDING
   ACCEPTED
