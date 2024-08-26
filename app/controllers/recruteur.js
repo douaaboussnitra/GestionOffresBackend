@@ -45,12 +45,12 @@ export const getAllRecruteur= async (req, res) => {
   }
   export const createRecruteur= async (req, res) => {   
     try {
-      const { candidate_id, validated_by, result } = req.body;
+      const { name, email, phone } = req.body;
       const recruteur = await prisma.recruteur.create({
         data: {
-            candidate_id,
-            validated_by,
-            result
+          name,
+          email,
+          phone
         }
       })
       res.status(201).json(recruteur);
@@ -62,13 +62,13 @@ export const getAllRecruteur= async (req, res) => {
   export const updateRecruteur= async (req, res) => {
     try {
       const { id } = req.params;
-      const { candidate_id, validated_by, result } = req.body;
+      const { name, email, phone } = req.body;
       const updatedRecruteur = await prisma.recruteur.update({
         where: { id: parseInt(id) },
         data: {
-            candidate_id,
-            validated_by,
-            result
+          name,
+          email,
+          phone
         }
       })
       res.status(200).json(updatedRecruteur);

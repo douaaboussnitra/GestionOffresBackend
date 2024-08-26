@@ -43,15 +43,14 @@ export const getAllCandidat= async (req, res) => {
   }
   export const createCandidat= async (req, res) => {   
     try {
-      const { experience, fullname, email, phone , cv  , roleId } = req.body;
+      const { experience, fullname, email, phone  , skills  } = req.body;
       const candidat = await prisma.candidat.create({
         data: {
           experience,
           fullname,
           email,
           phone,
-          cv ,
-          roleId
+          skills
       
         }
       })
