@@ -11,7 +11,7 @@ import prisma from '../config/prismaClient.js';
   candidats   Candidat[] @relation("CandidatSkills")
 } */
 
-export const getAllSkills= async (req, res) => {
+/* export const getAllSkills= async (req, res) => {
     try {
       const skillss = await prisma.skills.findMany();
       //const result = await pool.query('SELECT * FROM skills');
@@ -19,7 +19,7 @@ export const getAllSkills= async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+  } */
   export const getSkillsById= async (req, res) => {
     try {
       const { id } = req.params;

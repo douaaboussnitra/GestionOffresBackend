@@ -89,6 +89,7 @@ model JobOffer {
   contractType     String
   hierarchyLevel   String
   email            String
+  createdAt  DateTime  @default(now())
   recruiter        Recruteur @relation(fields: [postedBy], references: [id])
   applications     Application[]
   skills           String
@@ -100,10 +101,15 @@ model Application {
   candidateId Int
   jobOfferId  Int
   created_at  DateTime @default(now())
+  fullName    String
+  email       String
+  phone       String
+  experience  String
+  jobType     String
   filecv      String
   filemotiva  String
   Candidat    Candidat     @relation(fields: [candidateId], references: [id])
-  JobOffer    JobOffer     @relation(fields: [jobOfferId], references: [id])
+  JobOffer    JobOffer     @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
   // Interviews  Interview[]  @relation("ApplicationInterviews") // Added opposite relation field
   // Interview Interview[]
 }
@@ -131,14 +137,10 @@ model Validation {
 //   Application Application[] @relation("ApplicationInterviews")
 // }
 
-// model Skills {
-//   id          Int      @id @default(autoincrement())
-//   name        String
-//   categoryId  Int
-//   category    Category @relation(fields: [categoryId], references: [id])
-//   candidats   Candidat[] @relation("CandidatSkills")
-//   jobOffers   JobOffer[] @relation("JobOfferSkills")
-// }
+ model Skills {
+  id          Int      @id @default(autoincrement())
+  name        String
+ }
 
 // model Category {
 //   id       Int      @id @default(autoincrement())

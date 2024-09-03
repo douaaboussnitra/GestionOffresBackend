@@ -7,6 +7,11 @@ import  prisma  from '../config/prismaClient.js';
   id          Int          @id @default(autoincrement())
   candidateId Int
   jobOfferId  Int
+  fullName    String
+  email       String
+  phone       Int
+  experience  String
+  jobType     String
   Candidat    Candidat     @relation(fields: [candidateId], references: [id])
   JobOffer    JobOffer     @relation(fields: [jobOfferId], references: [id])
   Interviews  Interview[]  @relation("ApplicationInterviews") // Added opposite relation field
@@ -15,7 +20,7 @@ import  prisma  from '../config/prismaClient.js';
 } */
 
 
-   export const  getAllApplication= async (req, res) => {
+   export const getAllApplication= async (req, res) => {
     try {
       const application = await prisma.application.findMany();
       //const result = await pool.query('SELECT * FROM candidat');
@@ -43,8 +48,11 @@ import  prisma  from '../config/prismaClient.js';
  // Create application with file uploads
 export const createApplication = async (req, res) => {
   try {
-    const { candidateId, jobOfferId } = req.body;
-    const { filecv, filemotiva } = req.files; // Access uploaded files
+    const { filecv, filemotiva, body } = req.files; // Access uploaded files
+    console.log("body", req.body)
+    console.log("files", req.files)
+    const { fullName,email,phone,experience,jobType ,candidateId, jobOfferId} = req.body;
+    console.log("fullName", fullName)
     
     // Save file paths
     const filecvPath = filecv ? filecv[0].path : '';
@@ -52,8 +60,13 @@ export const createApplication = async (req, res) => {
 
     const application = await prisma.application.create({
       data: {
-        candidateId:2,
-        jobOfferId:4,
+        fullName,
+        email,
+        phone,
+        experience,
+        jobType,
+        candidateId:Number(candidateId),
+        jobOfferId:Number(jobOfferId),
         filecv: filecvPath,
         filemotiva: filemotivaPath
       }
@@ -68,7 +81,7 @@ export const createApplication = async (req, res) => {
 export const updateApplication = async (req, res) => {
   try {
     const { id } = req.params;
-    const { candidateId, jobOfferId } = req.body;
+    const { candidateId, jobOfferId,fullName,email,phone,experience,jobType } = req.body;
     const { filecv, filemotiva } = req.files; // Access uploaded files
 
     // Save file paths
@@ -80,6 +93,11 @@ export const updateApplication = async (req, res) => {
       data: {
         candidateId,
         jobOfferId,
+        fullName,
+        email,
+        phone,
+        experience,
+        jobType,
         filecv: filecvPath,
         filemotiva: filemotivaPath
       }

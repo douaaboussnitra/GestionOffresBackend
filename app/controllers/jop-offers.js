@@ -27,6 +27,15 @@ export const getAllJob_offers = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   }
+
+  export const getAllSkills= async (req, res) => {
+    try {
+      const skillss = await prisma.jobOffer.findMany();
+      res.status(200).json(skillss.map((e) => { return e.skills}))
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
   export const getJob_offersById= async (req, res) => {
     try {
       const { id } = req.params;
@@ -44,7 +53,7 @@ export const getAllJob_offers = async (req, res) => {
  
 export const createJob_offersById  = async (req, res) => {
   try {
-    const { title, description, requirements, location, salary, companyName, postedBy, contractType, hierarchyLevel, email, skillIds } = req.body;
+    const { title, description, requirements, location, salary, companyName, postedBy, contractType, hierarchyLevel, email, skills } = req.body;
 
     // Create job offer and link skills
     const jobOffer = await prisma.jobOffer.create({
@@ -58,12 +67,8 @@ export const createJob_offersById  = async (req, res) => {
         postedBy:2,
         contractType,
         hierarchyLevel,
-
-
         email,
-      //  skills: {
-    //      connect: skillIds.map(id => ({ id }))
-      //  }
+        skills
       }
     });
 
@@ -77,24 +82,22 @@ export const createJob_offersById  = async (req, res) => {
 export const updateJob_offersById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, requirements, location, salary, companyName, postedBy, contractType, hierarchyLevel, email, skillIds } = req.body;
+    const { title, description, requirements, location, salary, companyName, postedBy, contractType, hierarchyLevel, email, skills} = req.body;
 
     const updatedJobOffer = await prisma.jobOffer.update({
       where: { id: parseInt(id) },
       data: {
         title,
         description,
-        requirements,
+        requirements:"",
         location,
         salary,
         companyName,
-        postedBy,
+        postedBy:2,
         contractType,
         hierarchyLevel,
         email,
-        skills: {
-          set: skillIds.map(id => ({ id }))  // Replace existing skills with new ones
-        }
+        skills
       }
     });
 
@@ -106,7 +109,7 @@ export const updateJob_offersById = async (req, res) => {
   export const deleteJob_offersById= async (req, res) => {
     try {
       const { id } = req.params;
-      await prisma.jobOffer .delete({
+      await prisma.jobOffer.delete({
         where: { id: parseInt(id) },
       });
       res.status(204).send();
@@ -117,3 +120,24 @@ export const updateJob_offersById = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   }
+
+  export const searchJobOffers = async (req, res) => {
+    try {
+      const { contractType, skill } = req.query;
+  
+      const filters = {
+        where: {
+          contractType: contractType || undefined,
+          skills: {
+            contains: skill || '',
+          } 
+        }
+      };
+  
+      const job_offers = await prisma.jobOffer.findMany(filters);
+      res.status(200).json(job_offers);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+  
