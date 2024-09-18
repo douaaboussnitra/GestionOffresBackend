@@ -20,7 +20,42 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid password" });
     }
 
-    const token = jwt.sign({ id: user.id, email: user.email , role:user.roleId}, secret, {
+    let id ;
+    switch (user.roleId) {
+      case 1:
+        const recruteurs = await prisma.recruteur.findMany({
+          where: {
+            email 
+          },
+        });
+        
+        if (recruteurs.length > 0) {
+          const firstRecruteur = recruteurs[0];
+          id = firstRecruteur.id;
+        } else {
+          id = null;
+        }
+        break;
+
+        case 2:
+          const candidat = await prisma.candidat.findMany({
+            where: {
+              email 
+            },
+          });
+          
+          if (candidat.length > 0) {
+            const firstCandidat = candidat[0];
+            id = firstCandidat.id;
+          } else {
+            id = null;
+          }
+          break;
+      default:
+        break;
+    }
+
+    const token = jwt.sign({ id, email: user.email , role:user.roleId}, secret, {
       expiresIn: "1h",
     });
 
@@ -34,15 +69,13 @@ export const register = async (req, res) => {
   try {
   const { username, email, password , role } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 16);
-  const roleUser = await prisma.role.findUnique({
-    where: { id:role },
-  });
+
     const user = await prisma.user.create({
       data: {
         username,
         email,
         password: hashedPassword,
-        roleId  : roleUser.id
+        roleId  : role
       },
     });
 

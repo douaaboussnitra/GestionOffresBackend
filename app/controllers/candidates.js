@@ -46,7 +46,7 @@ export const getAllCandidat= async (req, res) => {
     try {
       const { id } = req.params;
       const applicants = await prisma.application.findMany({
-        where: { jobOfferId: parseInt(id) },select:{ fullName:true, email: true, phone: true }  
+        where: { jobOfferId: parseInt(id) },select:{id:true ,fullName:true, email: true, phone: true }  
       })
       /* const candidats = await prisma.candidat.findMany({
         where: { id: 
@@ -57,6 +57,7 @@ export const getAllCandidat= async (req, res) => {
         return res.status(404).json({ error: 'Applicant non trouvé' });
       }
       res.status(200).json(applicants);
+      console.log(applicants)
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

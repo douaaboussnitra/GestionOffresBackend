@@ -16,10 +16,26 @@ import prisma from '../config/prismaClient.js';
   recruteur        Recruteur   @relation(fields: [postedBy], references: [id])
   applications     Application[]
 }*/
-
 export const getAllJob_offers = async (req, res) => {
     try {
       const job_offers = await prisma.jobOffer.findMany();
+      console.log(job_offers)
+      //const result = await pool.query('SELECT * FROM candidat');
+      res.status(200).json(job_offers );
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
+
+
+  export const getAllJob_offers_rec  = async (req, res) => {
+    try {
+      const id =req.params.id;
+      const job_offers = await prisma.jobOffer.findMany({
+        where: {
+          postedBy: parseInt(id)
+          }
+      });
       console.log(job_offers)
       //const result = await pool.query('SELECT * FROM candidat');
       res.status(200).json(job_offers );
@@ -64,7 +80,7 @@ export const createJob_offersById  = async (req, res) => {
         location,
         salary,
         companyName,
-        postedBy:2,
+        postedBy,
         contractType,
         hierarchyLevel,
         email,

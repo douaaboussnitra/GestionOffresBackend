@@ -2,12 +2,13 @@ import multer from 'multer';
 import path from 'path';
 
 // Set up storage
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+const storage = multer.diskStorage({ // config
+
+  destination: function (req, file, multer) {  // fin bghit nhot  les file 
+    multer(null, 'uploads/');
   },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
+  filename: function (req, file, multer) {
+    multer(null, Date.now() + path.extname(file.originalname));  // kifach ghadi tkon smiya dyal file 
   }
 });
 

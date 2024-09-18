@@ -80,7 +80,7 @@ model Role {
 model JobOffer {
   id               Int      @id @default(autoincrement())
   title            String
-  description      String
+  description      String @db.LongText
   requirements     String?
   location         String
   salary           String
